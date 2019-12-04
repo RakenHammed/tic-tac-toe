@@ -1,0 +1,96 @@
+  <div (click)="showLine($event)">
+    <div *ngIf="verticalLine0" class="vertical-line0"></div>
+    <div *ngIf="verticalLine1" class="vertical-line1"></div>
+    <div *ngIf="verticalLine2" class="vertical-line2"></div>
+    <div *ngIf="obliqueLine0" class="oblique-line0"></div>
+    <div *ngIf="obliqueLine1" class="oblique-line1"></div>
+  </div>
+  <div class="container" (click)="showLine($event);checkIfPlayerWinsOrDraw()">
+    <div class="row justify-content-center align-items-center">
+      <div *ngIf="horizontalLine0" class="horizontal-line"></div>
+      <div id="00" class="square type1 align-items-center" (click)="checkSquare($event)">
+        <div *ngIf="board[0][0]!=='-'">
+          <ng-template [ngTemplateOutlet]="played" [ngTemplateOutletContext]="{index: '00'}">
+          </ng-template>
+        </div>
+      </div>
+      <div id="01" class="square type1" (click)="checkSquare($event)">
+        <div *ngIf="board[0][1]!=='-'">
+          <ng-template [ngTemplateOutlet]="played" [ngTemplateOutletContext]="{index: '01'}">
+          </ng-template>
+        </div>
+      </div>
+      <div id="02" class="square type2" (click)="checkSquare($event)">
+        <div *ngIf="board[0][2]!=='-'">
+          <ng-template [ngTemplateOutlet]="played" [ngTemplateOutletContext]="{index: '02'}">
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center align-items-center">
+      <div *ngIf="horizontalLine1" class="horizontal-line"></div>
+      <div id="10" class="square type1" (click)="checkSquare($event)">
+        <div *ngIf="board[1][0]!=='-'">
+          <ng-template [ngTemplateOutlet]="played" [ngTemplateOutletContext]="{index: '10'}">
+          </ng-template>
+        </div>
+      </div>
+      <div id="11" class="square type1" (click)="checkSquare($event)">
+        <div *ngIf="board[1][1]!=='-'">
+          <ng-template [ngTemplateOutlet]="played" [ngTemplateOutletContext]="{index: '11'}">
+          </ng-template>
+        </div>
+      </div>
+      <div id="12" class="square type2" (click)="checkSquare($event)">
+        <div *ngIf="board[1][2]!=='-'">
+          <ng-template [ngTemplateOutlet]="played" [ngTemplateOutletContext]="{index: '12'}">
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center align-items-center">
+      <div *ngIf="horizontalLine2" class="horizontal-line"></div>
+      <div id="20" class="square type3" (click)="checkSquare($event)">
+        <div *ngIf="board[2][0]!=='-'">
+          <ng-template [ngTemplateOutlet]="played" [ngTemplateOutletContext]="{index: '20'}">
+          </ng-template>
+        </div>
+      </div>
+      <div id="21" class="square type3" (click)="checkSquare($event)">
+        <div *ngIf="board[2][1]!=='-'">
+          <ng-template [ngTemplateOutlet]="played" [ngTemplateOutletContext]="{index: '21'}">
+          </ng-template>
+        </div>
+      </div>
+      <div id="22" class="square" (click)="checkSquare($event)">
+        <div *ngIf="board[2][2]!=='-'">
+          <ng-template [ngTemplateOutlet]="played" [ngTemplateOutletContext]="{index: '22'}">
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #played let-index="index">
+    <div *ngIf="board[index[0]][index[1]] ==='x'; else player2">
+      <i class="fas fa-times player1"></i>
+    </div>
+    <ng-template #player2>
+      <i class="far fa-circle player2"></i>
+    </ng-template>
+  </ng-template>
+
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">{{text}}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close();goToMenu()">Go To Menu</button>
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close();reload()">Play Again!</button>
+    </div>
+  </ng-template>
+
+  <button id="openModalButton" [hidden]="true" (click)="open(content)"></button>
